@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Fake News Classifier</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Fake News Classifier</h1>
+    <textarea id="text" placeholder="Paste article or headline here..." rows="8"></textarea>
+    <button id="predictBtn">Predict</button>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    const API_URL = "http://127.0.0.1:8000/predict";
+
+    document.getElementById('predictBtn').addEventListener('click', async () => {
+      const text = document.getElementById('text').value.trim();
+      if (!text) {
+        alert('Please enter some text.');
+        return;
+      }
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerText = 'Predicting...';
+
+      try {
+        const resp = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+
+        const data = await resp.json();
+
+        // ✅ Show only prediction
+        resultDiv.innerHTML = `<strong>Prediction:</strong> ${data.prediction}`;
+
+        // Coloring Result (Red = FAKE, Green = REAL)
+        resultDiv.style.color = data.prediction.trim() === "REAL" ? "green" : "red";
+
+
+      } catch (err) {
+        console.error(err);
+        resultDiv.innerText = 'Error calling API. Is backend running?';
+      }
+    });
+  </script>
+</body>
+</html>

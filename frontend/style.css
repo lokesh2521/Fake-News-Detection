@@ -1,0 +1,16 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f6f8fa;
+  padding: 40px;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+textarea { width: 100%; padding: 10px; font-size: 14px; margin-bottom: 10px; }
+button { padding: 10px 16px; font-size: 16px; cursor: pointer; }
+.result { margin-top: 16px; padding: 10px; background:#fafafa; border-radius:6px; }
